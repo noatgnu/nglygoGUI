@@ -1,0 +1,25 @@
+<div class="result" *ngIf="query">
+  <mat-expansion-panel expanded="true">
+    <mat-expansion-panel-header>
+      <strong>
+        {{query.id}}
+      </strong>
+    </mat-expansion-panel-header>
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        Phylogenetic Tree
+      </mat-expansion-panel-header>
+      <app-tree [nwkTree]="query"></app-tree>
+    </mat-expansion-panel>
+    <mat-expansion-panel expanded="true" *ngIf="query.hasAlign">
+      <mat-expansion-panel-header>
+        Alignment
+      </mat-expansion-panel-header>
+      <mat-card class="alignment">
+        <mat-card-content>
+          <app-alignment-viewer [query]="query"></app-alignment-viewer>
+        </mat-card-content>
+      </mat-card>
+    </mat-expansion-panel>
+  </mat-expansion-panel>
+</div>

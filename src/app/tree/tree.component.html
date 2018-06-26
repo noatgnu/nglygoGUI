@@ -1,0 +1,35 @@
+<div class="tree" *ngIf="nwkTree">
+  <mat-expansion-panel expanded="true">
+    <mat-expansion-panel-header>
+
+    </mat-expansion-panel-header>
+    <mat-radio-group [(ngModel)]="treeType" (change)="changeType()">
+      <mat-radio-button *ngFor="let t of treeTypes" value={{t}} class="tree-type-button">{{t}}</mat-radio-button>
+    </mat-radio-group>
+    <div *ngIf="alignedMotifs">
+      <form>
+        <mat-form-field>
+          <mat-select placeholder="N-link Motif Positions" (selectionChange)="DrawBranchChanges(selectedPosition.value)" #selectedPosition>
+            <mat-option *ngFor="let motif of alignedMotifs" [value]="motif.Id">
+              {{motif.Id}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+    </div>
+    <div id="phylocanvas" #phylocanvas (click)="clickNode()"></div>
+    <mat-action-row>
+      <button mat-raised-button color="primary" (click)="downloadSvg()">Get SVG</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+  <div *ngIf="selectedNodeData|async; let selectedNodeData">
+    <app-tree-node-data [nodeMotifData]="selectedNodeData" [nodeID]="selectedNode" [nodeName]="selectedNodeName" [connected]="connectedNode"></app-tree-node-data>
+  </div>
+</div>
+
+<ng-template #nomotif>
+  <p>
+    No motif detected
+  </p>
+</ng-template>
+

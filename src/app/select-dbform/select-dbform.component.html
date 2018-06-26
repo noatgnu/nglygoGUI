@@ -1,0 +1,120 @@
+<mat-vertical-stepper [linear]="isLinear">
+  <mat-step [stepControl]="coreDBFormGroup">
+    <form [formGroup]="coreDBFormGroup">
+      <ng-template matStepLabel>Select Database</ng-template>
+      <mat-form-field *ngIf="coreDBList|async; else loading; let coreDBList">
+        <mat-select formControlName="dbName" placeholder="Database Name">
+          <mat-option *ngFor="let coreDB of coreDBList" [value]="coreDB.dbName">{{coreDB.dbName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+        <button mat-raised-button type="button" (click)="OnSubmitDB()" matStepperNext>Retrieve</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="queryListFormGroup">
+    <form [formGroup]="queryListFormGroup">
+      <ng-template matStepLabel>Select Queries</ng-template>
+      <div *ngIf="queryList|async;else loading; let queryList">
+        <div style="float:left;width:75%">
+          <ngx-datatable #myTable
+                         class="material expandable"
+                         [limit]="20"
+                         [rows]="queryList"
+                         [headerHeight]="50"
+                         [footerHeight]="50"
+                         [rowHeight]="100"
+                         [columnMode]="'flex'"
+                         [selected]="selected"
+                         [selectionType]="'multiClick'"
+                         (select)="onSelect($event)">
+            <ngx-datatable-row-detail [rowHeight]="'auto'" #myDetailRow>
+              <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+                <div><strong>ID</strong></div>
+                <div class="expand-row">{{row.id}}</div>
+                <div *ngIf="row.tree"><strong>Tree</strong></div>
+                <div class="expand-row">{{row.tree}}</div>
+              </ng-template>
+            </ngx-datatable-row-detail>
+            <ngx-datatable-column class="expand-arrow"
+                                  [flexGrow]="1"
+                                  [resizeable]="false"
+                                  [sortable]="false"
+                                  [draggable]="false"
+                                  [canAutoResize]="false">
+              <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                <mat-icon class="mat-18" (click)="toggleExpandRow(row)" *ngIf="expanded">keyboard_arrow_down</mat-icon>
+                <mat-icon class="mat-18" (click)="toggleExpandRow(row)" *ngIf="!expanded">keyboard_arrow_right</mat-icon>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="id" name="ID" [flexGrow]="1">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                {{value}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Attribute" [flexGrow]="3">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <div *ngIf="row.hasTree">
+                  <a>Phylogenetic Tree</a>
+                </div>
+                <div *ngIf="row.hasAlign">
+                  <a>Alignment</a>
+                </div>
+                <div *ngIf="row.hasMotif">
+                  <a>Motif Analysis</a>
+                </div>
+                <div *ngIf="row.hasTopDom">
+                  <a>Topological Domain Analysis</a>
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+        <div style="float:right; width:23%">
+          <mat-card>
+            <mat-card-content>
+              <div>
+                <h4>Selections</h4>
+                <ul>
+                  <li *ngFor="let s of selected">
+                    {{s.id}}
+                  </li>
+                  <li *ngIf="!selected.length">No Selections</li>
+                </ul>
+              </div>
+            </mat-card-content>
+            <mat-card-actions>
+              <div>
+                <button mat-raised-button color="primary" type="button" (click)="display()" matStepperNext>Submit Queries</button>
+              </div>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </form>
+  </mat-step>
+</mat-vertical-stepper>
+<br>
+<br>
+<div class="query-display" #resultel>
+  <mat-card *ngIf="queryDisplayList|async;else resultloading; let queryDisplayList">
+    <mat-card-header>
+      <mat-card-title>
+        <h4>Queries</h4>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngFor="let query of queryDisplayList">
+        <app-result-viewer [query]="query"></app-result-viewer>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+
+<ng-template #resultloading>
+
+</ng-template>
+<ng-template #loading>
+  loading...
+</ng-template>

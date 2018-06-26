@@ -1,0 +1,28 @@
+rect.bordered {
+  stroke: white;
+  stroke-width:1;
+}
+
+text.aa-residue {
+  fill:  #990000;
+}
+
+text.aaPositionText {
+  font-size: 5pt;
+  font-family: Consolas, courier;
+  fill: #aaa;
+}
+
+text.mono {
+  font-size: 9pt;
+  font-family: Consolas, courier;
+  fill: #aaa;
+}
+
+text.axis-workweek {
+  fill: #000;
+}
+
+text.axis-worktime {
+  fill: #000;
+}

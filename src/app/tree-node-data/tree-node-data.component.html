@@ -1,0 +1,119 @@
+<div *ngIf="nodeMotifData">
+  <h4>
+    Selected node id: {{nodeID}} - Directly connected to: {{ConnectedString()}}
+  </h4>
+  <ngx-datatable #myTable
+                 class="material"
+                 [limit]="20"
+                 [rows]="nodeMotifData"
+                 [headerHeight]="50"
+                 [footerHeight]="50"
+                 [rowHeight]="100"
+                 [columnMode]="'flex'">
+    <ngx-datatable-column prop="origin" name="Origin Node" [flexGrow]="1">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <div *ngIf="value==nodeID">
+          <p style="color: red">
+            {{value}}
+          </p>
+        </div>
+        <div *ngIf="value!=nodeID">
+          <p>
+            {{value}}
+          </p>
+        </div>
+
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="target" name="Target Node" [flexGrow]="1">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <div *ngIf="value==nodeID">
+          <p style="color: red">
+            {{value}}
+          </p>
+        </div>
+        <div *ngIf="value!=nodeID">
+          <p>
+            {{value}}
+          </p>
+        </div>
+
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="source" name="Direction Source" [flexGrow]="1">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <div *ngIf="value==nodeID">
+          <p style="color: red">
+            {{value}}
+          </p>
+        </div>
+        <div *ngIf="value!=nodeID">
+          <p>
+            {{value}}
+          </p>
+        </div>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="originStart" name="Origin Start Position" [flexGrow]="1">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <div *ngIf="value==nodeID">
+          <p style="color: red">
+            {{value}}
+          </p>
+        </div>
+        <div *ngIf="value!=nodeID">
+          <p>
+            {{value}}
+          </p>
+        </div>
+
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="originEnd" name="Origin End Position" [flexGrow]="1">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <p>
+          {{value}}
+        </p>
+
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="originSeq" name="Origin Sequence" [flexGrow]="1">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <p>
+          {{value}}
+        </p>
+
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="targetStart" name="Target Start Position" [flexGrow]="1">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <p>
+          {{value}}
+        </p>
+
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="targetEnd" name="Target End Position" [flexGrow]="1">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <p>
+          {{value}}
+        </p>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="targetSeq" name="Target Seq" [flexGrow]="1">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <p>
+          {{value}}
+        </p>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="status" name="Motif Status" [flexGrow]="1">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <p>
+          {{value}}
+        </p>
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+
+</div>
